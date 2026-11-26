@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   title,
   description,
   authors: [{ name: "박정환" }],
+  verification: {
+    google: "OhZfBv2KzFrdoCDuzvbaQknwgaV0M8cQJEp41-vbstA",
+    other: {
+      "naver-site-verification": "42569f7f72cc5f120487692c38ab8f38978b67e3",
+    },
+  },
   robots: { index: indexable, follow: indexable },
   alternates: metadataBase ? { canonical: "/" } : undefined,
   openGraph: {
