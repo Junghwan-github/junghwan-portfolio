@@ -1,0 +1,147 @@
+.section {
+  padding-block: clamp(4.5rem, 10vw, var(--section-padding-top)) calc(clamp(3rem, 7vw, 6rem) + 100px);
+  background: #f5f7fb;
+}
+
+.heading {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--color-accent-text);
+  font-size: var(--font-size-xl);
+  font-weight: 750;
+  letter-spacing: -0.035em;
+}
+
+.group {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: clamp(1.5rem, 4vw, 3.25rem);
+  border-top: 1px solid #dfe4ef;
+}
+
+.group:last-child {
+  padding-bottom: 0;
+}
+
+.groupTitle {
+  display: flex;
+  flex: 0 0 clamp(9rem, 18vw, 13rem);
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.55em;
+  font-size: var(--font-size-xl);
+  font-weight: 750;
+}
+
+.groupTitle svg {
+  flex: none;
+  color: var(--color-accent-text);
+}
+
+.list {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.85rem, 4vw, 3rem);
+}
+
+.skill + .skill {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e3e7f0;
+}
+
+.skillCopy {
+  min-width: 0;
+}
+
+.skillCopy h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-size: var(--font-size-lg);
+  font-weight: 750;
+}
+
+.skillCopy h4 svg {
+  flex: none;
+}
+
+.skillCopy p {
+  margin-top: 0.3rem;
+  color: var(--gray-600);
+  word-break: keep-all;
+}
+
+.proficiency {
+  flex: 0 0 clamp(8rem, 15vw, 12rem);
+  font-size: var(--font-size-sm);
+}
+
+.proficiency p {
+  margin-bottom: 0.25rem;
+  color: var(--gray-600);
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.meter {
+  display: block;
+  width: 100%;
+  height: 0.45rem;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: #e3e8f4;
+}
+
+.meter::-webkit-meter-bar {
+  border: 0;
+  border-radius: 999px;
+  background: #e3e8f4;
+}
+
+.meter::-webkit-meter-optimum-value {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4264cf, #7355c7);
+}
+
+.meter::-moz-meter-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4264cf, #7355c7);
+}
+
+@media (forced-colors: active) {
+  .meter {
+    appearance: auto;
+  }
+}
+
+@media (max-width: 48rem) {
+  .group {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .groupTitle {
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 36rem) {
+  .skill {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .proficiency {
+    flex-basis: auto;
+  }
+}

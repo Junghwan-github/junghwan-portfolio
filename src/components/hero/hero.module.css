@@ -1,0 +1,166 @@
+.hero {
+  --hero-max-width: 1024px;
+  --hero-gutter: max(clamp(1rem, 4vw, 2rem), calc((100% - var(--hero-max-width)) / 2));
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 43rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 34rem 28rem at 73% 43%, rgb(218 229 245 / 76%), transparent 76%),
+    radial-gradient(ellipse 28rem 10rem at 73% 84%, rgb(202 213 229 / 64%), transparent 80%),
+    linear-gradient(180deg, #fff 22%, #f8f9fb 72%, #eef1f6);
+  color: var(--theme-color);
+}
+
+.content {
+  position: absolute;
+  inset: 0 var(--hero-gutter);
+  container-type: inline-size;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  padding-block: 5rem 2rem;
+}
+
+.scene {
+  position: absolute;
+  inset: 15% var(--hero-gutter) 15% auto;
+  width: calc((100% - 2 * var(--hero-gutter)) * 0.48);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 12%;
+  width: min(72%, 27rem);
+  height: 14%;
+  margin-inline: auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at center, rgb(28 37 48 / 32%), transparent 58%),
+    radial-gradient(ellipse at center, rgb(75 95 115 / 18%), transparent 72%);
+  filter: blur(8px);
+  opacity: var(--shadow-opacity, 0.85);
+  transform: translateX(var(--shadow-offset, 0px)) scaleX(var(--shadow-scale, 1));
+}
+
+.dropletFallback {
+  position: relative;
+  z-index: 1;
+  width: min(70%, 58svh, 22rem);
+  max-height: 75%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 32% 23%, #fff 0%, transparent 25%),
+    radial-gradient(ellipse at 71% 77%, #c8faff 0%, transparent 33%),
+    radial-gradient(circle at 42% 38%, #bfecff, #729ee2 52%, #3a569e 76%, #92c3ed 100%);
+  box-shadow: inset 0 0 1rem rgb(233 250 255 / 68%);
+}
+
+@media (width > 48rem) {
+  .scene:not([data-ready])::after {
+    --shadow-offset: 22%;
+  }
+
+  .dropletFallback {
+    justify-self: end;
+    margin-inline-end: 1%;
+  }
+}
+
+.scene[data-ready] .dropletFallback {
+  visibility: hidden;
+}
+
+.scene canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.scene[data-ready] canvas {
+  visibility: visible;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 52%;
+}
+
+.copy h1 {
+  font-size: min(4.45cqi, 3rem);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+
+.copy h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.copy h1 .titleAccent {
+  width: fit-content;
+  color: #364cbc;
+  background: linear-gradient(105deg, #233b99 7%, #2566c0 49%, #683bba 94%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0.12em 0.35em rgb(69 89 195 / 22%));
+}
+
+@media (forced-colors: active) {
+  .copy h1 .titleAccent {
+    -webkit-text-fill-color: currentColor;
+    filter: none;
+  }
+}
+
+.copy a {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 48rem) {
+  .hero {
+    min-height: 40rem;
+    background:
+      radial-gradient(ellipse 21rem 15rem at 50% 74%, rgb(218 229 245 / 80%), transparent 82%),
+      linear-gradient(180deg, #fff 32%, #f7f9fc 72%, #eef1f6);
+  }
+
+  .scene {
+    inset: 58% var(--hero-gutter) 5%;
+    width: auto;
+  }
+
+  .scene::after {
+    inset-block-end: 9%;
+  }
+
+  .content {
+    align-content: start;
+    padding-top: clamp(5.75rem, 15svh, 8rem);
+  }
+
+  .copy {
+    max-width: 100%;
+  }
+
+  .copy h1 {
+    font-size: min(8.5cqi, 3.5rem);
+  }
+
+  .copy a {
+    margin-top: 1rem;
+  }
+}
+
