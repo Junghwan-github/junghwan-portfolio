@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SlArrowRight } from "react-icons/sl";
 import Container from "./Container";
 import FloatingNav from "./FloatingNav";
+import MobileMenu from "./MobileMenu";
 import styles from "./layout.module.css";
 
 const menu = ["About", "Skills", "Portfolio"];
@@ -25,6 +26,7 @@ export default function Header() {
             <Link className={styles.inquiry} href="/#contact">
               Contack <SlArrowRight aria-hidden="true" size="0.75em" />
             </Link>
+            <MobileMenu items={[...menu, "Contact"]} />
           </nav>
         </Container>
       </header>

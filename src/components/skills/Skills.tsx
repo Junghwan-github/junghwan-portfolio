@@ -13,7 +13,7 @@ import {
   SiSpringboot,
   SiTypescript,
 } from "react-icons/si";
-import { RevealSection } from "@/components/motion/reveal";
+import { RevealContent } from "@/components/motion/reveal";
 import Container from "@/components/layout/Container";
 import styles from "./skills.module.css";
 
@@ -130,31 +130,33 @@ const groups = [
 
 export default function Skills() {
   return (
-    <RevealSection className={styles.section} id="skills" aria-labelledby="skills-title">
-      <Container>
-        <h2 id="skills-title" className={styles.heading}>Skills</h2>
-        {groups.map(({ title, icon: GroupIcon, skills }) => (
-          <section className={styles.group} key={title} aria-labelledby={`skills-${title.toLowerCase()}`}>
-            <h3 className={styles.groupTitle} id={`skills-${title.toLowerCase()}`}>
-              <GroupIcon aria-hidden="true" /> {title}
-            </h3>
-            <ul className={styles.list}>
-              {skills.map(({ name, icon: Icon, color, usage, level }) => (
-                <li className={styles.skill} key={name}>
-                  <div className={styles.skillCopy}>
-                    <h4><Icon aria-hidden="true" color={color} /> {name}</h4>
-                    <p>{usage}</p>
-                  </div>
-                  <div className={styles.proficiency}>
-                    <p aria-hidden="true">{level}%</p>
-                    <meter className={styles.meter} min={0} max={100} value={level} aria-label={`${name} 숙련도`} />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </Container>
-    </RevealSection>
+    <section className={styles.section} id="skills" aria-labelledby="skills-title">
+      <RevealContent>
+        <Container>
+          <h2 id="skills-title" className={styles.heading}>Skills</h2>
+          {groups.map(({ title, icon: GroupIcon, skills }) => (
+            <section className={styles.group} key={title} aria-labelledby={`skills-${title.toLowerCase()}`}>
+              <h3 className={styles.groupTitle} id={`skills-${title.toLowerCase()}`}>
+                <GroupIcon aria-hidden="true" /> {title}
+              </h3>
+              <ul className={styles.list}>
+                {skills.map(({ name, icon: Icon, color, usage, level }) => (
+                  <li className={styles.skill} key={name}>
+                    <div className={styles.skillCopy}>
+                      <h4><Icon aria-hidden="true" color={color} /> {name}</h4>
+                      <p>{usage}</p>
+                    </div>
+                    <div className={styles.proficiency}>
+                      <p aria-hidden="true">{level}%</p>
+                      <meter className={styles.meter} min={0} max={100} value={level} aria-label={`${name} 숙련도`} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </Container>
+      </RevealContent>
+    </section>
   );
 }

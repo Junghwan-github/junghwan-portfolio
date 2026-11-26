@@ -151,7 +151,7 @@
 }
 
 .profile a {
-  color: var(--color-action-hover);
+  color: var(--color-action);
   text-underline-offset: 0.2em;
 }
 

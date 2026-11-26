@@ -1,7 +1,8 @@
 "use client";
 
-import type { FormEvent } from "react";
-import { LuArrowUpRight, LuMail } from "react-icons/lu";
+import { useState, type FormEvent } from "react";
+import { LuMail } from "react-icons/lu";
+import { SlArrowRight } from "react-icons/sl";
 import Container from "@/components/layout/Container";
 import { RevealContent } from "@/components/motion/reveal";
 import styles from "./contact.module.css";
@@ -9,15 +10,37 @@ import styles from "./contact.module.css";
 const email = "jungie2@naver.com";
 
 export default function Contact() {
-  function composeEmail(event: FormEvent<HTMLFormElement>) {
+  const [sending, setSending] = useState(false);
+  const [feedback, setFeedback] = useState("");
+
+  async function sendEmail(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const name = String(form.get("name")).trim();
-    const replyEmail = String(form.get("email")).trim();
-    const message = String(form.get("message")).trim();
-    const subject = encodeURIComponent(`포트폴리오 문의 · ${name}`);
-    const body = encodeURIComponent(`이름: ${name}\r\n이메일: ${replyEmail}\r\n\r\n${message.replace(/\r?\n/g, "\r\n")}`);
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    if (sending) return;
+
+    const form = event.currentTarget;
+    const payload = Object.fromEntries(new FormData(form));
+    setSending(true);
+    setFeedback("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const result = await response.json();
+        setFeedback(result.message);
+        return;
+      }
+
+      form.reset();
+      setFeedback("메일을 보냈습니다.");
+    } catch {
+      setFeedback("메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -31,26 +54,32 @@ export default function Contact() {
               <LuMail aria-hidden="true" /> {email}
             </a>
           </div>
-          <form className={styles.form} onSubmit={composeEmail} aria-describedby="contact-form-hint">
-            <div className={styles.identity}>
+          <form className={styles.form} onSubmit={sendEmail}>
+            <fieldset className={styles.fields} disabled={sending}>
+              <div className={styles.identity}>
+                <label>
+                  이름
+                  <input name="name" autoComplete="name" maxLength={80} pattern={/.*\S.*/.source} required />
+                </label>
+                <label>
+                  이메일
+                  <input name="email" type="email" autoComplete="email" maxLength={254} required />
+                </label>
+              </div>
               <label>
-                이름
-                <input name="name" autoComplete="name" maxLength={80} pattern={/.*\S.*/.source} required />
+                제목
+                <input name="subject" maxLength={120} pattern={/.*\S.*/.source} required />
               </label>
               <label>
-                이메일
-                <input name="email" type="email" autoComplete="email" maxLength={254} required />
+                문의 내용
+                <textarea name="message" rows={6} maxLength={2500} required />
               </label>
-            </div>
-            <label>
-              문의 내용
-              <textarea name="message" rows={6} maxLength={2500} required />
-            </label>
+            </fieldset>
             <div className={styles.actions}>
-              <button className="action-button" type="submit">
-                메일 작성하기 <LuArrowUpRight aria-hidden="true" />
+              <p role="status">{feedback}</p>
+              <button className={`action-button ${styles.submit}`} type="submit" disabled={sending}>
+                {sending ? "보내는 중…" : "메일 보내기"} <SlArrowRight aria-hidden="true" size="0.75em" />
               </button>
-              <p id="contact-form-hint">입력한 내용은 기본 메일 앱에서 확인하고 보낼 수 있어요.</p>
             </div>
           </form>
         </RevealContent>

@@ -52,11 +52,6 @@ function useReveal<Element extends HTMLElement>() {
   };
 }
 
-export function RevealSection(props: HTMLMotionProps<"section">) {
-  const reveal = useReveal<HTMLElement>();
-  return <motion.section {...props} {...reveal} />;
-}
-
 export function RevealContent(props: HTMLMotionProps<"div">) {
   const reveal = useReveal<HTMLDivElement>();
   return <motion.div {...props} {...reveal} />;

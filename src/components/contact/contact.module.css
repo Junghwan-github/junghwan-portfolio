@@ -1,5 +1,8 @@
-.section {
-  padding-block: clamp(4.5rem, 10vw, var(--section-padding-top)) clamp(4.5rem, 9vw, 8rem);
+﻿.section {
+  display: grid;
+  align-items: center;
+  min-height: 100vh;
+  padding-block: clamp(2.5rem, 7vh, 5rem);
   background: var(--background);
 }
 
@@ -35,7 +38,7 @@
   align-items: center;
   gap: 0.55rem;
   margin-top: 1.4rem;
-  color: var(--color-action-hover);
+  color: var(--color-action);
   font-weight: 650;
   text-underline-offset: 0.2rem;
 }
@@ -45,10 +48,15 @@
   flex: 1.25 1 0;
   min-width: 0;
   gap: 1.2rem;
-  padding: clamp(1.25rem, 3.5vw, 2.75rem);
-  border: 1px solid #e3e7f0;
-  border-radius: 30px;
-  background: #f5f7fb;
+}
+
+.fields {
+  display: grid;
+  min-width: 0;
+  gap: 1.2rem;
+  padding: 0;
+  border: 0;
+  margin: 0;
 }
 
 .identity {
@@ -92,13 +100,31 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.75rem 1rem;
 }
 
+.actions .submit {
+  min-height: 2.625rem;
+  gap: 0.65rem;
+  padding: 0.55rem 1rem;
+  font-size: var(--font-size-sm);
+}
+
 .actions p {
+  margin-inline-end: auto;
   color: var(--gray-600);
   font-size: var(--font-size-sm);
   word-break: keep-all;
+}
+
+.actions p:empty {
+  position: absolute;
+}
+
+.submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 @media (max-width: 48rem) {

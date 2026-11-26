@@ -100,7 +100,7 @@
 .copy h1 {
   font-size: min(4.45cqi, 3rem);
   font-weight: 800;
-  line-height: 1.03;
+  line-height: 1.16;
   letter-spacing: -0.05em;
 }
 
@@ -131,6 +131,7 @@
 
 @media (max-width: 48rem) {
   .hero {
+    --mobile-hero-offset: 25px;
     min-height: 40rem;
     background:
       radial-gradient(ellipse 21rem 15rem at 50% 74%, rgb(218 229 245 / 80%), transparent 82%),
@@ -138,7 +139,9 @@
   }
 
   .scene {
-    inset: 58% var(--hero-gutter) 5%;
+    /* Leave more room for the larger title on wide mobile screens. */
+    --scene-lift: clamp(0px, calc(12svh - max(0px, (100vw - 30rem) * 0.25)), 7.5rem);
+    inset: calc(58% - var(--scene-lift) + var(--mobile-hero-offset)) var(--hero-gutter) calc(5% + var(--scene-lift) - var(--mobile-hero-offset));
     width: auto;
   }
 
@@ -148,19 +151,29 @@
 
   .content {
     align-content: start;
-    padding-top: clamp(5.75rem, 15svh, 8rem);
+    justify-items: center;
+    padding-top: calc(clamp(5.75rem, 15svh, 8rem) + var(--mobile-hero-offset));
   }
 
   .copy {
     max-width: 100%;
+    text-align: center;
   }
 
   .copy h1 {
     font-size: min(8.5cqi, 3.5rem);
   }
 
+  .copy h1 .titleAccent {
+    margin-inline: auto;
+  }
+
   .copy a {
+    min-height: 2.75rem;
+    gap: 0.65rem;
     margin-top: 1rem;
+    padding: 0.55rem 1rem;
+    font-size: var(--font-size-sm);
   }
 }
 

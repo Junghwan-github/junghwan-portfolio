@@ -4,6 +4,8 @@ import Image from "next/image";
 import { motion, useMotionTemplate, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties, type FocusEvent, type MouseEvent } from "react";
 import { LuArrowUpRight, LuX } from "react-icons/lu";
+import { SlArrowRight } from "react-icons/sl";
+import { personalProjects } from "./personalProjects";
 import styles from "./portfolio.module.css";
 
 import { projects, type Project } from "./projects";
@@ -114,6 +116,8 @@ export default function Portfolio() {
   const trackViewport = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const dialogBody = useRef<HTMLDivElement>(null);
+  const personalDialog = useRef<HTMLDialogElement>(null);
+  const personalBody = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<Project | null>(null);
   const { scrollYProgress: entry } = useScroll({
     target: section,
@@ -173,6 +177,20 @@ export default function Portfolio() {
         <div className={styles.content}>
           <header className={styles.heading}>
             <h2 id="portfolio-title">Portfolio</h2>
+            <div className={styles.headingRow}>
+              <p>프로젝트별 화면 구성과 사용자가 서비스를 이용하는 흐름을 담았습니다.</p>
+              <button
+                type="button"
+                className={styles.personalTrigger}
+                aria-haspopup="dialog"
+                onClick={() => {
+                  personalDialog.current?.showModal();
+                  personalBody.current?.scrollTo({ top: 0, behavior: "instant" });
+                }}
+              >
+                개인 프로젝트 보기 <SlArrowRight aria-hidden="true" size="0.75em" />
+              </button>
+            </div>
           </header>
           <div className={styles.trackViewport} ref={trackViewport}>
             <motion.ol className={styles.track} style={{ x }}>
@@ -250,6 +268,48 @@ export default function Portfolio() {
               {selected.concept && <p className={`${styles.conceptNotice} ${styles.detailNotice}`}>{conceptNotice}</p>}
             </>
           )}
+        </div>
+      </dialog>
+      <dialog
+        ref={personalDialog}
+        className={styles.dialog}
+        aria-labelledby="personal-projects-title"
+        onClick={closeFromBackdrop}
+      >
+        <header className={styles.dialogBar}>
+          <h3 className={styles.personalDialogTitle} id="personal-projects-title">개인 프로젝트</h3>
+          <button
+            className={styles.close}
+            type="button"
+            aria-label="개인 프로젝트 닫기"
+            autoFocus
+            onClick={() => personalDialog.current?.close()}
+          >
+            <LuX aria-hidden="true" />
+          </button>
+        </header>
+        <div className={styles.dialogBody} ref={personalBody} tabIndex={0} role="region" aria-label="개인 프로젝트 목록">
+          <div className={styles.personalGrid}>
+            {personalProjects.map(({ id, name, url, description }) => (
+              <article className={styles.personalCard} key={id}>
+                <a className={styles.personalImage} href={url} target="_blank" rel="noopener noreferrer" aria-label={`${name} 사이트 열기 (새 탭)`}>
+                  <Image
+                    src={`/images/personal-projects/${id}.webp`}
+                    width={1800}
+                    height={1125}
+                    sizes="(max-width: 42rem) 90vw, 420px"
+                    quality={90}
+                    alt={`${name} 첫 화면 스크린샷`}
+                  />
+                </a>
+                <h4>{name}</h4>
+                <p>{description}</p>
+                <a className={styles.personalUrl} href={url} target="_blank" rel="noopener noreferrer">
+                  {url} <LuArrowUpRight aria-hidden="true" />
+                </a>
+              </article>
+            ))}
+          </div>
         </div>
       </dialog>
     </section>
